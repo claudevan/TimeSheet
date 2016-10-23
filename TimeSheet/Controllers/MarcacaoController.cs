@@ -143,6 +143,7 @@ namespace TimeSheet.Controllers
         private void Map(Marcacao marcacao, MarcacaoVM marcacaoVM)
         {
             marcacaoVM.Id = marcacao.Id;
+            marcacaoVM.UserId = marcacao.UserId;
             marcacaoVM.DataMarcacao = marcacao.DataMarcacao;
             marcacaoVM.EntradaManha = new DateTime(marcacao.EntradaManha.Value);
             marcacaoVM.SaidaManha = new DateTime(marcacao.SaidaManha.Value);
@@ -154,6 +155,7 @@ namespace TimeSheet.Controllers
         private void Map(MarcacaoVM marcacaoVM, Marcacao marcacao)
         {
             marcacao.Id = marcacaoVM.Id;
+            marcacao.UserId = marcacaoVM.UserId;
             marcacao.DataMarcacao = marcacaoVM.DataMarcacao;
             marcacao.EntradaManha = marcacaoVM.EntradaManha.Value.Ticks;
             marcacao.SaidaManha = marcacaoVM.SaidaManha.Value.Ticks;
