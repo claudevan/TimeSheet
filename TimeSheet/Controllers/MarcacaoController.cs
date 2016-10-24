@@ -43,13 +43,16 @@ namespace TimeSheet.Controllers
             {
                 return HttpNotFound();
             }
-            return View(marcacao);
+            var marcacaoVM = new MarcacaoVM();
+            Map(marcacao, marcacaoVM);
+
+            return PartialView(marcacaoVM);
         }
 
         // GET: Marcacao/Create
-        public ActionResult Create()
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Marcacao/Create
@@ -88,7 +91,7 @@ namespace TimeSheet.Controllers
             var marcacaoVM = new MarcacaoVM();
             Map(marcacao, marcacaoVM);
 
-            return View(marcacaoVM);
+            return PartialView(marcacaoVM);
         }
 
         // POST: Marcacao/Edit/5
@@ -126,7 +129,7 @@ namespace TimeSheet.Controllers
             var marcacaoVM = new MarcacaoVM();
             Map(marcacao, marcacaoVM);
 
-            return View(marcacaoVM);
+            return PartialView(marcacaoVM);
         }
 
         // POST: Marcacao/Delete/5

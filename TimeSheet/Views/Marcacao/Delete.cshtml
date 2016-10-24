@@ -1,80 +1,25 @@
 ﻿@model TimeSheet.ViewModels.Marcacao.MarcacaoVM
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Excluir";
 }
 
-<h2>Delete</h2>
+<h2>Excluir</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Deseja excluir a marcação?</h3>
 <div>
-    <h4>MarcacaoVM</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DataMarcacao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DataMarcacao)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EntradaManha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EntradaManha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SaidaManha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SaidaManha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EntradaTarde)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EntradaTarde)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SaidaTarde)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SaidaTarde)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descricao)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descricao)
-        </dd>
-
-    </dl>
+    @Html.Partial("_MarcacaoDelDetails", Model)
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <button type="submit" value="Excluir" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                 Excluir
+            </button>
         </div>
     }
 </div>
