@@ -43,13 +43,16 @@ namespace TimeSheet.Controllers
             {
                 return HttpNotFound();
             }
-            return View(marcacao);
+            var marcacaoVM = new MarcacaoVM();
+            Map(marcacao, marcacaoVM);
+
+            return PartialView(marcacaoVM);
         }
 
         // GET: Marcacao/Create
-        public ActionResult Create()
+        public PartialViewResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Marcacao/Create
@@ -88,7 +91,7 @@ namespace TimeSheet.Controllers
             var marcacaoVM = new MarcacaoVM();
             Map(marcacao, marcacaoVM);
 
-            return View(marcacaoVM);
+            return PartialView(marcacaoVM);
         }
 
         // POST: Marcacao/Edit/5
@@ -126,7 +129,7 @@ namespace TimeSheet.Controllers
             var marcacaoVM = new MarcacaoVM();
             Map(marcacao, marcacaoVM);
 
-            return View(marcacaoVM);
+            return PartialView(marcacaoVM);
         }
 
         // POST: Marcacao/Delete/5
@@ -143,6 +146,7 @@ namespace TimeSheet.Controllers
         private void Map(Marcacao marcacao, MarcacaoVM marcacaoVM)
         {
             marcacaoVM.Id = marcacao.Id;
+            marcacaoVM.UserId = marcacao.UserId;
             marcacaoVM.DataMarcacao = marcacao.DataMarcacao;
             marcacaoVM.EntradaManha = new DateTime(marcacao.EntradaManha.Value);
             marcacaoVM.SaidaManha = new DateTime(marcacao.SaidaManha.Value);
@@ -154,6 +158,7 @@ namespace TimeSheet.Controllers
         private void Map(MarcacaoVM marcacaoVM, Marcacao marcacao)
         {
             marcacao.Id = marcacaoVM.Id;
+            marcacao.UserId = marcacaoVM.UserId;
             marcacao.DataMarcacao = marcacaoVM.DataMarcacao;
             marcacao.EntradaManha = marcacaoVM.EntradaManha.Value.Ticks;
             marcacao.SaidaManha = marcacaoVM.SaidaManha.Value.Ticks;
