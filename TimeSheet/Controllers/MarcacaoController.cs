@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Web.Mvc;
 using TimeSheet.Entity.Contexto;
+using TimeSheet.Entity.Contractos;
 using TimeSheet.Modelo;
 using TimeSheet.ViewModels.Marcacao;
 
@@ -12,12 +13,17 @@ namespace TimeSheet.Controllers
 {
     public class MarcacaoController : Controller
     {
-        private TimeSheetDataContext db = new TimeSheetDataContext();
+        private IMarcacao _db;
+
+        public MarcacaoController(IMarcacao db)
+        {
+            _db = db;
+        }
 
         // GET: Marcacao
         public ActionResult Index()
         {
-            var marcacoes = db.Marcacao.ToList();
+            var marcacoes = _db.Get();
             List<MarcacaoVM> lstMarcacao = new List<MarcacaoVM>();
 
             foreach (var marcacao in marcacoes)
@@ -38,7 +44,7 @@ namespace TimeSheet.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Marcacao marcacao = db.Marcacao.Find(id);
+            Marcacao marcacao = _db.GetById(id.Value);
             if (marcacao == null)
             {
                 return HttpNotFound();
@@ -67,8 +73,7 @@ namespace TimeSheet.Controllers
                 Marcacao marcacao = new Marcacao();
                 Map(marcacaoVM, marcacao);
 
-                db.Marcacao.Add(marcacao);
-                db.SaveChanges();
+                _db.Create(marcacao);
                 return RedirectToAction("Index");
             }
 
@@ -82,7 +87,7 @@ namespace TimeSheet.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Marcacao marcacao = db.Marcacao.Find(id);
+            Marcacao marcacao = _db.GetById(id.Value);
             if (marcacao == null)
             {
                 return HttpNotFound();
@@ -106,8 +111,7 @@ namespace TimeSheet.Controllers
 
             if (ModelState.IsValid)
             {
-                db.Entry(marcacao).State = EntityState.Modified;
-                db.SaveChanges();
+                _db.Update(marcacao);
                 return RedirectToAction("Index");
             }
             return View(marcacaoVM);
@@ -120,7 +124,7 @@ namespace TimeSheet.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Marcacao marcacao = db.Marcacao.Find(id);
+            Marcacao marcacao = _db.GetById(id.Value);
             if (marcacao == null)
             {
                 return HttpNotFound();
@@ -137,9 +141,7 @@ namespace TimeSheet.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Marcacao marcacao = db.Marcacao.Find(id);
-            db.Marcacao.Remove(marcacao);
-            db.SaveChanges();
+            _db.Delete(_db.GetById(id));
             return RedirectToAction("Index");
         }
 
@@ -171,7 +173,7 @@ namespace TimeSheet.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                //db.Dispose();
             }
             base.Dispose(disposing);
         }
